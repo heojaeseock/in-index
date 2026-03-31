@@ -6,17 +6,14 @@
     <title>타사 라이브 이슈 대응 분석 보고서</title>
     <!-- Chosen Palette: Slate 900 (Background), Blue 600 (Primary), Emerald 500 (Success), Rose 500 (Alert) -->
     <!-- Application Structure Plan: 
-         - 한 페이지로 이어지는 스크롤 방식의 대시보드 레이아웃.
-         - 제목을 '타사'로 일반화하여 전문적인 벤치마킹 리포트 형식 구축.
-         - 섹션 1: 이슈 팩트 요약 (명조 사례 활용)
-         - 섹션 2: 유저 반응 분석 (데이터 시각화)
-         - 섹션 3: 성공 요인 추론
-         - 섹션 4: 라인게임즈 실무 적용 제안 (보상 기준 사업부 사전 합의 등)
+         - 단일 페이지 스크롤 레이아웃으로 구성하여 보고서의 흐름을 유지.
+         - 상단 내비게이션 바의 활성화 상태를 첫 번째 탭으로 수정.
+         - 실무적 관점에서 사업부와의 협의 체계 및 초기 대응 가이드라인 강조.
     -->
     <!-- Visualization & Content Choices:
-         - Chart.js를 이용한 여론 변화 시각화.
-         - 텍스트 가독성을 위한 word-break: keep-all 및 줄바꿈 최적화.
-         - '사업부'와의 협업을 강조한 실무 제안.
+         - Chart.js를 통해 여론 변화를 시각적으로 전달.
+         - word-break: keep-all을 적용하여 한국어 문장이 단어 단위로 예쁘게 줄바꿈되도록 설정.
+         - 불필요한 영문을 제거하고 '타사'와 '사업부' 등의 용어로 전문성 확보.
          CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
@@ -40,10 +37,17 @@
         }
 
         .nav-link {
-            transition: color 0.2s;
+            transition: all 0.2s;
         }
-        .nav-link:hover { color: #2563eb; }
         
+        /* 활성화된 탭 스타일 */
+        .nav-link.active {
+            color: #2563eb;
+            font-weight: 800;
+            border-bottom: 2px solid #2563eb;
+            padding-bottom: 4px;
+        }
+
         .card-shadow {
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
@@ -74,10 +78,11 @@
     <!-- 내비게이션 바 -->
     <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
         <div class="max-w-4xl mx-auto px-6 flex space-x-10 py-4 overflow-x-auto text-sm font-bold text-slate-500 whitespace-nowrap scrollbar-hide justify-center">
-            <a href="#fact" class="nav-link">1. 이슈 요약</a>
-            <a href="#opinion" class="nav-link">2. 유저 반응</a>
-            <a href="#why" class="nav-link">3. 성공 이유</a>
-            <a href="#idea" class="nav-link text-blue-600 font-extrabold border-b-2 border-blue-600 pb-1">4. 실무 제안</a>
+            <!-- 첫 번째 탭에 active 클래스 부여 -->
+            <a href="#fact" class="nav-link active hover:text-blue-600">1. 이슈 요약</a>
+            <a href="#opinion" class="nav-link hover:text-blue-600">2. 유저 반응</a>
+            <a href="#why" class="nav-link hover:text-blue-600">3. 성공 이유</a>
+            <a href="#idea" class="nav-link hover:text-blue-600">4. 실무 제안</a>
         </div>
     </nav>
 
@@ -132,7 +137,7 @@
 
             <div class="bg-white rounded-3xl p-8 md:p-12 card-shadow border border-slate-100">
                 <div class="mb-12 text-center">
-                    <p class="font-bold text-slate-400 mb-6 text-xs tracking-widest uppercase italic text-center">대응 전후 유저 마음 변화 추이</p>
+                    <p class="font-bold text-slate-400 mb-6 text-xs tracking-widest uppercase italic">대응 전후 유저 마음 변화 추이</p>
                     <div class="chart-container">
                         <canvas id="sentimentChart"></canvas>
                     </div>
@@ -148,7 +153,7 @@
                     <div class="p-7 bg-emerald-50 rounded-2xl border border-emerald-100">
                         <p class="font-bold text-emerald-800 mb-3 flex items-center">📈 대응 이후: 신뢰 회복</p>
                         <p class="text-emerald-700">
-                            "잘못을 확실히 책임지는 모습에 감동했다", "이런 운영이라면 믿고 가도 되겠다"며 긍정적인 여론이 폭발적으로 늘어났습니다.
+                            "잘못을 확실히 책임지는 모습이 대단하다", "이런 운영이라면 믿고 가도 되겠다"며 긍정적인 여론이 폭발적으로 늘어났습니다.
                         </p>
                     </div>
                 </div>
@@ -202,7 +207,7 @@
                         <span class="bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">제안 하나</span>
                         <h3 class="text-2xl font-bold text-slate-900">이슈 발생 시 '보상 기준 미리 정하기'</h3>
                     </div>
-                    <p class="text-slate-600 mb-10 text-lg">
+                    <p class="text-slate-600 mb-10 text-lg leading-relaxed">
                         사고가 터졌을 때 "얼마를 줄지" 회의하느라 시간을 허비하지 않도록, 보상 범위를 미리 <strong>사업부</strong>와 합의해 두어 대응 속도를 극대화합니다.
                     </p>
                     <div class="bg-blue-50/50 p-8 rounded-3xl border border-blue-100">
@@ -216,7 +221,7 @@
                                 <span class="font-bold text-slate-700">일반적인 오류 (단순 오타 등)</span>
                                 <span class="text-xs text-blue-600 font-extrabold bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100">공통 보상 패키지</span>
                             </div>
-                            <p class="text-[11px] text-slate-400 mt-6 text-center italic">
+                            <p class="text-[11px] text-slate-400 mt-6 text-center italic leading-relaxed">
                                 * 사고 인지 즉시 이 기준표에 맞춰 사업부와 최종 조율 후 즉시 보고를 진행합니다.
                             </p>
                         </div>
@@ -261,11 +266,11 @@
     <footer class="bg-slate-950 text-white py-20 px-6 text-center">
         <p class="text-slate-500 text-xs tracking-[0.2em] uppercase mb-6">라이브 서비스 운영 전략 리포트</p>
         <div class="w-16 h-1 bg-blue-600 mx-auto mb-8"></div>
-        <p class="text-slate-400 text-sm italic">라인게임즈 라이브운영팀</p>
+        <p class="text-slate-400 text-sm italic leading-relaxed">라인게임즈 라이브운영팀</p>
     </footer>
 
     <script>
-        // 감정 수치 변화 시각화 로직
+        // 그래프 시각화 로직
         const ctx = document.getElementById('sentimentChart').getContext('2d');
         new Chart(ctx, {
             type: 'line',
@@ -323,6 +328,27 @@
                     }
                 }
             }
+        });
+
+        // 스크롤 시 내비게이션 활성화 로직 (간단 구현)
+        window.addEventListener('scroll', () => {
+            const sections = ['fact', 'opinion', 'why', 'idea'];
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = 'fact';
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (window.scrollY >= section.offsetTop - 150) {
+                    current = id;
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
         });
     </script>
 </body>
